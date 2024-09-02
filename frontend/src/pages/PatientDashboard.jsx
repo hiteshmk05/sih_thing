@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import SideNavbar from './SideNavbar';
+import SideNavbar from './sideNavbar';
 import PatientInfoCard from './PatientInfo';
 import PatientMetricsCard from './PatientMetrics';
 import PatientHealthDetails from './PatientHealth';
