@@ -1,5 +1,5 @@
 import React from 'react';
-import './UserReport.css'; // Importing a separate CSS file for styling
+import './userReport.css'; // Importing a separate CSS file for styling
 
 const UserReport = () => {
   return (
