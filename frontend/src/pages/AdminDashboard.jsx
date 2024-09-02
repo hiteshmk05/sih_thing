@@ -26,15 +26,27 @@ function AdminDashboard() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setPatients([...patients, newPatient]); // Add new patient to the list
+        setPatients([...patients, newPatient]);
         setNewPatient({ id: '', name: '', age: '', gender: '', weight: '', bp: '' });
+    };
+
+    const handleLogout = () => {
+        navigate('/');
     };
 
     return (
         <div className="min-h-screen bg-gray-100 p-6">
-            <header className="mb-8 text-center">
-                <h1 className="text-4xl font-bold text-gray-800">Admin Dashboard</h1>
-                <p className="text-gray-600">Manage Patient Information with Ease</p>
+            <header className="mb-8 flex justify-between items-center">
+                <div className="flex-grow text-center">
+                    <h1 className="text-4xl font-bold text-gray-800">Admin Dashboard</h1>
+                    <p className="text-gray-600">Manage Patient Information with Ease</p>
+                </div>
+                <button
+                    onClick={handleLogout}
+                    className="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700"
+                >
+                    Logout
+                </button>
             </header>
 
             <main>
@@ -109,7 +121,6 @@ function AdminDashboard() {
                                 placeholder="BP (e.g., 120/80)"
                             />
                         </div>
-
                     </form>
                     <div className='flex items-center justify-center'>
                         <button
@@ -122,7 +133,6 @@ function AdminDashboard() {
                 </div>
 
                 <div className="bg-white shadow rounded-lg p-6">
-
                     <h2 className="text-3xl font-semibold mb-4 text-center">Patient List</h2>
                     <div className="overflow-x-auto">
                         <table className="min-w-full bg-white border border-gray-200">
@@ -163,7 +173,6 @@ function AdminDashboard() {
                         </table>
                     </div>
                 </div>
-
             </main>
         </div>
     );

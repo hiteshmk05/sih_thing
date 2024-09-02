@@ -20,8 +20,6 @@ const Signup = () => {
     
     const handleSubmit = async  (e) => {
         e.preventDefault();
-        // Transfer to login page after storing SignUp data in BACKEND 
-        // If any backend error occurs Return that error
         navigate("/login")
     }
 

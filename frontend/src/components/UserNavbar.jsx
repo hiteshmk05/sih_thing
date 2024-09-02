@@ -1,12 +1,18 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const SideNavbar = () => {
   const { userId } = useParams();
+  const navigate = useNavigate();
 
   const patient = {
     name: 'John Doe',
     image: '/user.png',
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    navigate('/');
   };
 
   return (
@@ -43,6 +49,7 @@ const SideNavbar = () => {
 
       <div className="mt-auto mb-10">
         <button
+          onClick={handleLogout} // Add onClick handler to call handleLogout
           className="w-full bg-red-600 hover:bg-red-700 text-lg py-2 rounded"
         >
           Logout

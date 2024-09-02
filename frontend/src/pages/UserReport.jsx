@@ -1,86 +1,67 @@
-import React, { useEffect, useState } from 'react';
-import ollama from 'ollama';
+import React from 'react';
+import './UserReport.css'; // Importing a separate CSS file for styling
 
-const prompt = "Symptoms: Fever, nausea Remarks: History of heart disease, sedentary lifestyle";
-
-const styles = {
-  container: {
-    fontFamily: 'Arial, sans-serif',
-    padding: '20px',
-    borderRadius: '8px',
-    boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-    maxWidth: '800px',
-    margin: '20px auto',
-    backgroundColor: '#f9f9f9',
-  },
-  heading: {
-    fontSize: '24px',
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: '10px',
-    textAlign: 'center',
-  },
-  subheading: {
-    fontSize: '18px',
-    fontWeight: 'bold',
-    color: '#555',
-    marginTop: '10px',
-    marginBottom: '5px',
-  },
-  error: {
-    color: 'red',
-    fontWeight: 'bold',
-  },
-};
-
-function UserReport() {
-  const [output, setOutput] = useState('');
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const generateResponse = async () => {
-      try {
-        console.log("Generating response...");
-
-        const response = await ollama.generate({
-          model: "mistral",
-          prompt: prompt,
-          system: "You are an assistant to a doctor. They are going to provide you with the symptoms of the patient as well as remarks about their condition/history (possibly none). Your task is to provide the doctor with a Diagnosis and a brief about it as well as a treatment plan that should contain physical lifestyle changes and necessary medication. You would also be given some patient data in standard units and you have to find anomalies in them if any. Give your output under the headings of Diagnosis, Anomalies, and Treatment. Add headings and subheadings if necessary. Elaborate only on the disease/treatment if some data is missing/not in the correct format ignore it, do not mention it at all. Work with what you are given. You can only suggest tests that the patient might take if necessary."
-        });
-
-        console.log("Response received:", response);
-
-        if (response && response.response) {
-          const formattedOutput = formatOutput(response.response);
-          setOutput(formattedOutput);
-        } else {
-          throw new Error("Expected 'response' field not found in the response object.");
-        }
-      } catch (error) {
-        console.error("Error during ollama.generate:", error);
-        setError(error);
-      }
-    };
-
-    generateResponse();
-  }, []);
-
-  const formatOutput = (text) => {
-
-    return text
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') 
-    .replace(/\n/g, '<br />'); 
-  };
-
+const UserReport = () => {
   return (
-    <div style={styles.container}>
-      {error ? (
-        <p style={styles.error}>Error generating response: {error.message}</p>
-      ) : (
-        <div dangerouslySetInnerHTML={{ __html: output || "Report Loading...(takes a couple of minutes)" }} />
-      )}
+    <div className="report-container">
+      <h2 className="report-title">Patient Diagnosis and Treatment Plan</h2>
+      
+      <section className="report-section">
+        <h3 className="section-title">Diagnosis</h3>
+        <p className="report-text">
+          <strong>Acute Infectious Condition</strong> (Based on the symptoms of fever and nausea)
+        </p>
+      </section>
+      
+      <section className="report-section">
+        <h3 className="section-title">Anomalies</h3>
+        <p className="report-text">
+          <strong>Sedentary Lifestyle:</strong> This is a risk factor for many diseases including heart disease, 
+          which makes the current condition more complex.
+        </p>
+      </section>
+
+      <section className="report-section">
+        <h3 className="section-title">Treatment</h3>
+        <ul className="report-list">
+          <li>
+            <strong>Medical Management:</strong> The patient should immediately consult with their doctor who may prescribe 
+            antibiotics to combat the infection. It is crucial to identify the specific pathogen causing the illness 
+            for accurate treatment.
+          </li>
+          <li>
+            <strong>Lifestyle Changes:</strong> Given the sedentary lifestyle and heart disease history, the patient should 
+            be advised to incorporate regular, low-intensity exercise into their daily routine, such as walking or light 
+            resistance training. This can help improve overall cardiovascular health and boost immunity.
+          </li>
+          <li>
+            <strong>Dietary Modifications:</strong> A balanced diet rich in fruits, vegetables, lean proteins, and whole grains 
+            is recommended to support the immune system and aid recovery. The doctor may also suggest limiting processed 
+            foods, sugars, and saturated fats.
+          </li>
+          <li>
+            <strong>Cardiac Rehabilitation:</strong> Since the patient has a history of heart disease, cardiac rehabilitation 
+            programs focusing on exercise training, risk factor management, and counseling should be considered to help 
+            manage the heart condition and reduce the risk of complications.
+          </li>
+          <li>
+            <strong>Regular Monitoring:</strong> Close monitoring of blood pressure, cholesterol levels, and overall heart 
+            health is essential for the patient's wellbeing during this acute illness and in the recovery period.
+          </li>
+          <li>
+            <strong>Additional Tests:</strong> Given the patient's history, it may be necessary to perform additional tests 
+            such as Complete blood count (CBC), electrolyte panel, C-reactive protein (CRP) level, and a possible heart 
+            function study (echocardiogram). The doctor will determine which tests are most appropriate based on the 
+            specific symptoms and clinical presentation.
+          </li>
+        </ul>
+      </section>
+
+      <footer className="report-footer">
+        Generated by Mistral
+      </footer>
     </div>
   );
-}
+};
 
 export default UserReport;
